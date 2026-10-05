@@ -34,6 +34,8 @@
   --leaf-4:#6f7d2e;
   --focus:#1d4ed8;
   --tram:#c8102e;
+  --carnelian:#b31b1b;
+  --cornell-ink:#b31b1b;
   --cab:#f2b705;
   --road:#2a3038;
   --river:#86a9c4;
@@ -55,7 +57,7 @@
     --maple:#e8774a; --ginkgo:#f0b941; --park:#6db38f; --brick:#e06a5b; --on-accent:#0c1219;
     --sky-top:#070c16; --sky-bottom:#2b2347; --skyline:#03060b; --window:#ffcf6b;
     --leaf-1:#e8774a; --leaf-2:#f0b941; --leaf-3:#c9503f; --leaf-4:#9aa84a; --focus:#8ab4ff;
-    --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52;
+    --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52; --cornell-ink:#f2766d;
     color-scheme:dark;
   }
 }
@@ -64,7 +66,7 @@
   --maple:#e8774a; --ginkgo:#f0b941; --park:#6db38f; --brick:#e06a5b; --on-accent:#0c1219;
   --sky-top:#070c16; --sky-bottom:#2b2347; --skyline:#03060b; --window:#ffcf6b;
   --leaf-1:#e8774a; --leaf-2:#f0b941; --leaf-3:#c9503f; --leaf-4:#9aa84a; --focus:#8ab4ff;
-  --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52;
+  --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52; --cornell-ink:#f2766d;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -80,11 +82,49 @@ p{margin:0}
 .eyebrow{font-family:var(--f-body);font-variation-settings:"wdth" 75;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:var(--step--1);color:var(--muted)}
 .tabnum{font-variant-numeric:tabular-nums}
 
+/* institution bar */
+.inst{background:var(--carnelian);color:#fff}
+.inst .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.45rem;font-size:var(--step--1)}
+.inst a{color:#fff;text-decoration:none;font-weight:650;letter-spacing:.02em}
+.inst a:hover{color:#fff;text-decoration:underline;text-decoration-color:#fff}
+.inst .sep{opacity:.6;margin-inline:.55rem}
+.inst .term{font-family:var(--f-mono);opacity:.9;white-space:nowrap}
+@media (max-width:520px){.inst .term{display:none}}
+
+/* run of show */
+.run-intro{margin-top:.4rem}
+.run{list-style:none;margin:.6rem 0 0;padding:0 0 0 .2rem;border-left:2px solid var(--c);display:grid}
+.run li{display:grid;grid-template-columns:3.4rem 1fr;gap:.7rem;padding:.55rem 0 .55rem .9rem;position:relative}
+.run li::before{content:"";position:absolute;left:-7px;top:.95rem;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--c)}
+.run li.mini{background:color-mix(in srgb,var(--c) 9%,transparent);border-radius:0 10px 10px 0}
+.run li.mini::before{background:var(--c)}
+.run li.brk{color:var(--muted)}
+.run .t{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);padding-top:.12rem}
+.run .w b.k{color:var(--c);font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.08em;font-size:var(--step--1);display:block}
+.run .w .src{color:var(--muted)}
+/* halloween, Oct 31 only */
+#s4{position:relative}
+.hw{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+.hw svg{position:absolute;display:block}
+.hw .bat{width:46px;top:.2rem;left:-60px;fill:var(--ink);animation:batfly 16s linear infinite}
+.hw .bat.b2{width:30px;top:2.6rem;animation-duration:22s;animation-delay:-9s;opacity:.75}
+.hw .bat .wing{transform-origin:23px 12px;animation:flap .32s ease-in-out infinite alternate}
+@keyframes batfly{0%{transform:translate(0,0)}25%{transform:translate(28vw,26px)}50%{transform:translate(56vw,-4px)}75%{transform:translate(84vw,22px)}100%{transform:translate(115vw,0)}}
+@keyframes flap{to{transform:scaleY(-.55)}}
+.hw .spider{right:1.4rem;top:0;width:22px;animation:drop 7s ease-in-out infinite;transform-origin:11px 0}
+.hw .spider line{stroke:var(--muted);stroke-width:1}
+.hw .spider .body{fill:var(--ink)}
+@keyframes drop{0%,100%{transform:translateY(-48px)}45%,60%{transform:translateY(0)}52%{transform:translateY(-6px) rotate(4deg)}}
+.pumpkin{display:inline-block;width:1.7rem;height:1.7rem;vertical-align:-.25rem;margin-left:.4rem;animation:bob 3s ease-in-out infinite}
+.pumpkin .glow{fill:#ffcf5a;animation:flicker 1.6s steps(1) infinite}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-4deg)}}
+@keyframes flicker{0%{opacity:1}30%{opacity:.55}45%{opacity:.95}70%{opacity:.7}}
+@media (prefers-reduced-motion:reduce){.hw .bat,.hw .bat .wing,.hw .spider,.pumpkin,.pumpkin .glow{animation:none}.hw .bat{left:auto;right:4rem}.hw .bat.b2{display:none}.hw .spider{transform:none}}
 /* nav */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
 .nav .wrap{display:flex;align-items:center;gap:1rem;padding-block:.6rem;overflow-x:auto;scrollbar-width:none}
 .nav .wrap::-webkit-scrollbar{display:none}
-.nav .brand{font-family:var(--f-mono);font-weight:500;white-space:nowrap;font-size:var(--step--1)}
+.nav .brand{font-family:var(--f-mono);font-weight:600;white-space:nowrap;font-size:var(--step--1);background:var(--carnelian);color:#fff;padding:.2rem .6rem;border-radius:6px}
 .nav ul{display:flex;gap:.25rem;list-style:none;margin:0 0 0 auto;padding:0}
 .nav a{display:block;text-decoration:none;font-variation-settings:"wdth" 80;font-weight:600;font-size:var(--step--1);letter-spacing:.06em;text-transform:uppercase;padding:.35rem .6rem;border-radius:999px;white-space:nowrap}
 .nav a:hover{background:var(--surface-2);color:var(--ink)}
@@ -94,12 +134,12 @@ p{margin:0}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block}
 .hero-inner{padding-block:clamp(2.5rem,6vw,5rem) clamp(9rem,16vw,12rem);display:grid;gap:1.4rem}
 .hero h1{font-family:var(--f-display);font-weight:500;font-size:var(--step-4);line-height:.98;letter-spacing:-.01em;max-width:14ch}
-.hero h1 em{font-style:italic;color:var(--maple);font-weight:600}
+.hero h1 em{font-style:italic;color:var(--cornell-ink);font-weight:600}
 .lede{max-width:58ch;font-size:var(--step-1);line-height:1.45}
 .question{font-family:var(--f-display);font-style:italic;font-size:var(--step-2);line-height:1.2;max-width:24ch}
 .question span{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--ginkgo) 45%,transparent) 62%)}
 .status{display:inline-flex;align-items:center;gap:.6rem;width:fit-content;padding:.45rem .9rem;border-radius:999px;background:var(--surface);border:1px solid var(--rule);font-family:var(--f-mono);font-size:var(--step--1)}
-.pulse{width:.6rem;height:.6rem;border-radius:50%;background:var(--maple);box-shadow:0 0 0 0 color-mix(in srgb,var(--maple) 60%,transparent);animation:pulse 2.4s ease-out infinite}
+.pulse{width:.6rem;height:.6rem;border-radius:50%;background:var(--cornell-ink);box-shadow:0 0 0 0 color-mix(in srgb,var(--cornell-ink) 60%,transparent);animation:pulse 2.4s ease-out infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 .7rem transparent}100%{box-shadow:0 0 0 0 transparent}}
 
 /* facts */
@@ -109,11 +149,11 @@ p{margin:0}
 .fact small{color:var(--muted);font-size:var(--step--1)}
 
 /* ticker */
-.ticker{margin-top:2.2rem;border-block:1px solid var(--rule);background:var(--ink);color:var(--bg);overflow:hidden}
+.ticker{margin-top:2.2rem;background:var(--carnelian);color:#fff;overflow:hidden}
 .ticker-track{display:flex;width:max-content;animation:tick 70s linear infinite}
 .ticker:hover .ticker-track{animation-play-state:paused}
 .ticker-track p{display:flex;gap:2.4rem;padding:.7rem 1.2rem;white-space:nowrap;font-family:var(--f-mono);font-size:var(--step--1);letter-spacing:.04em;text-transform:uppercase}
-.ticker-track p span::after{content:"◆";margin-left:2.4rem;color:var(--ginkgo)}
+.ticker-track p span::after{content:"◆";margin-left:2.4rem;color:#ffd27a}
 @keyframes tick{to{transform:translateX(-50%)}}
 
 /* sections */
@@ -234,9 +274,12 @@ td:first-child{font-weight:650;white-space:nowrap}
 .res a{display:grid;gap:.3rem;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem 1.1rem;transition:border-color .2s ease,transform .2s ease}
 .res a:hover{border-color:var(--maple);transform:translateY(-2px);color:var(--ink)}
 .res a span{color:var(--muted);font-size:.9rem}
-footer{border-top:1px solid var(--rule);padding-block:2.5rem;display:grid;gap:.5rem}
+footer{border-top:3px solid var(--carnelian);padding-block:2.5rem;display:grid;gap:.5rem}
 footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step-2)}
 
+.roles{display:grid;gap:.55rem;margin:.2rem 0 0;padding:0;list-style:none}
+.roles li{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:start;font-size:.93rem}
+.roles .role{font-family:var(--f-body);font-variation-settings:"wdth" 80;font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:999px;background:var(--c);color:var(--on-accent);white-space:nowrap;margin-top:.12rem}
 /* NYC details */
 .street-sign{display:inline-block;width:fit-content;margin-top:.35rem;background:var(--sign);color:#fff;font-family:var(--f-body);font-variation-settings:"wdth" 70;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;padding:.18rem .55rem;border-radius:3px;border:1.5px solid #fff;box-shadow:0 0 0 1.5px var(--sign);transform-origin:top center;animation:sway 5s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
@@ -305,7 +348,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
 <header class="hero">
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="wrap hero-inner">
-    <p class="eyebrow">LAW 6337 · Cornell Tech · Fall 2026 · 1 credit</p>
+    <p class="eyebrow">Cornell Tech · Cornell Law School · LAW 6337 · Fall 2026</p>
     <h1>Law &amp; Technology &amp; <em>Economics of AI</em></h1>
     <p class="lede">Lawyers write rules, founders write strategies, engineers write code. All three are bets on how AI technology and AI markets will evolve together. This course trains you to state the bet and to test it.</p>
     <p class="question"><span>“What must be true for this rule to work?”</span></p>
@@ -324,8 +367,8 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
 
 <div class="ticker" role="marquee" aria-label="Key dates">
   <div class="ticker-track">
-    <p><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>Take-home exam · date set by the registrar</span></p>
-    <p aria-hidden="true"><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>Take-home exam · date set by the registrar</span></p>
+    <p><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · The Roosevelt Island AI Act</span><span>Take-home exam · date set by the registrar</span></p>
+    <p aria-hidden="true"><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · The Roosevelt Island AI Act</span><span>Take-home exam · date set by the registrar</span></p>
   </div>
 </div>
 
@@ -362,7 +405,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
         <li class="stop major"><span class="dot" style="--c:var(--ginkgo)">2</span><span class="when">Sat Oct 24</span><a class="what" href="#s2">Case study: the open-weights bet</a></li>
         <li class="stop major"><span class="dot" style="--c:var(--park)">3</span><span class="when">Thu Oct 29</span><a class="what" href="#s3">Regulation &amp; how rules travel</a></li>
         <li class="stop minor"><span class="dot"></span><span class="when">Fri Oct 30</span><span class="what">Team prep</span></li>
-        <li class="stop major"><span class="dot" style="--c:var(--brick)">4</span><span class="when">Sat Oct 31</span><a class="what" href="#s4">Case study: labels, thresholds, 2031</a></li>
+        <li class="stop major"><span class="dot" style="--c:var(--brick)">4</span><span class="when">Sat Oct 31</span><a class="what" href="#s4">Case study: the Roosevelt Island AI Act</a></li>
         <li class="stop minor"><span class="dot"></span><span class="when">Registrar’s date</span><span class="what">Take-home exam</span></li>
         <li class="stop minor"><span class="dot"></span><span class="when">About a month later</span><span class="what">One short case by email</span></li>
       </ol>
@@ -388,7 +431,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
           <h4>Lecture 1 · The technical architecture of AI</h4>
           <div class="bet"><span class="label">The bet under test</span><p>“Training compute is a good proxy for what a model can do.”</p></div>
           <p>We take the AI stack apart, from chips and cloud to foundation models and applications, and look at how scaling works and where it stops working. We then compare open and closed weights.</p>
-          <p><b>Exercise</b><span class="tag">in class · no preparation · 25 min</span><br>Using Epoch AI’s public data, find the most capable model trained below the EU’s 10<sup>25</sup> FLOP line. Then ask what the rule would say about it.</p>
+          <p><b>Exercise</b><span class="tag">in class · no preparation · 25 min</span><br>Using Epoch AI’s public data, find the most capable model trained below the 10<sup>26</sup> FLOP line used by California and New York. Then ask what the rule would say about it.</p>
           <div class="fact-box"><span class="label">In Epoch AI’s data, October 5, 2026</span><span><b>24</b> models above 10<sup>25</sup> FLOP, from 14 developers. <b>4</b> above 10<sup>26</sup>.</span><span><b>108</b> models released since June 2025 by OpenAI, Anthropic, Google and xAI have no public compute estimate.</span></div>
         </div>
         <div class="col">
@@ -451,8 +494,21 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
       <div class="part c2">
         <div class="col">
           <div class="bet"><span class="label">The bet under test</span><p>“Giving away model weights is a durable strategy.”</p></div>
-          <p>Your team plays Meta. Five real events are revealed one at a time. After each one, you decide what Meta should do, then compare with what Meta did and name the assumption that broke.</p>
-          <div class="spoiler" style="border-style:solid"><b>Prepare with your team</b> (Friday, October 23)<br>A team presentation on Meta’s 2024 bet on open weights. State what had to be true for it to work and which indicator you would have watched. Graded as part of the case-study component.</div><p><b>In class</b><span class="tag">no preparation</span><br>After the presentations, the timeline game tests your bet against what actually happened.</p>
+          <p>In July 2024, Meta bet on open weights. A week later, the National Telecommunications and Information Administration (NTIA) of the U.S. Department of Commerce made a regulatory bet. It recommended that the government monitor open-weight models without restricting them, and act only if evidence of risk emerged. This case study tests both bets.</p>
+          <div class="spoiler" style="border-style:solid"><b>Prepare with your team</b> (Friday, October 23)<br>The instructor assigns each team a role, usually two teams per role. Graded as part of the case-study component.<br><b>Every team brings</b> a presentation of no more than 10 minutes and one hypothesis card for its position. The presentation answers two questions. What is your strategy? And should the government keep the NTIA approach, restrict open weights, or adopt a different rule? If you propose a rule, show its text.<ul class="roles"><li><span class="role">Meta</span><span>Present the 2024 bet on open weights, what had to be true for it to work, and the indicator you would have watched. Then take the position on the NTIA approach that serves your strategy.</span></li><li><span class="role">Closed-model lab</span><span>Present your response to a rival that gives its weights away, and where your advantage must come from. Then say whether leaving open weights unrestricted tilts the market against you.</span></li><li><span class="role">Policymakers</span><span>Decide whether open-weight models should face restrictions. Defend your rule, and name the evidence that would make you change it.</span></li><li><span class="role">Startup</span><span>You build your product on open weights. Present the risks of depending on a model you do not control, and the rule you would ask the government for.</span></li></ul></div>
+          <p class="run-intro"><b>In class</b> (times are approximate). Between presentations, the instructor gives short mini-lectures. Each one introduces a new concept and connects it to what the teams just presented. Expect to be asked whether the concept changes your position.</p>
+          <ol class="run">
+            <li><span class="t">1:30</span><span class="w"><b>Meta teams present</b></span></li>
+            <li><span class="t">1:50</span><span class="w"><b>Closed-model lab teams present</b></span></li>
+            <li class="mini"><span class="t">2:10</span><span class="w"><b class="k">Mini-lecture · The economics of open source</b>Why would a firm give away what it paid to build? Lerner &amp; Tirole (2002), read against the two strategies just presented.</span></li>
+            <li><span class="t">2:20</span><span class="w"><b>Startup teams present</b></span></li>
+            <li class="mini"><span class="t">2:40</span><span class="w"><b class="k">Mini-lecture · Hold-up</b>What happens when your product depends on an asset someone else controls? Klein, Crawford &amp; Alchian (1978), applied to the startups’ risks and to the terms of open-weight licences.</span></li>
+            <li><span class="t">2:50</span><span class="w"><b>Policymaker teams present</b></span></li>
+            <li class="mini"><span class="t">3:10</span><span class="w"><b class="k">Mini-lecture · Irreversibility</b>Released weights cannot be recalled. Arrow &amp; Fisher (1974) on the value of waiting before an irreversible choice, applied to the NTIA decision to monitor first and act later.</span></li>
+            <li class="brk"><span class="t">3:20</span><span class="w">Break</span></li>
+            <li><span class="t">3:30</span><span class="w"><b>The timeline game</b><span class="tag">in class · no preparation</span><br>Five real events are revealed one at a time. After each one, every team decides its next move in its role. Then the class compares with what actually happened and names the assumption that broke.</span></li>
+            <li><span class="t">4:15</span><span class="w"><b>Back to the rule</b><span class="tag">in class · no preparation</span><br>Each team says whether its position on the rule survived the game, and which line of its hypothesis card failed first.</span></li>
+          </ol>
           <div class="spoiler"><b>One request.</b> Please do not look up Meta’s AI announcements after July 2024 before class. The game works best when you decide before you know.</div>
         </div>
         <div class="col">
@@ -460,6 +516,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
             <ul class="reads">
               <li>Mark Zuckerberg (2024), <a href="https://about.fb.com/news/2024/07/open-source-ai-is-the-path-forward/" target="_blank" rel="noopener">“Open Source AI Is the Path Forward”</a>. <span class="src">Meta Newsroom, July 23, 2024</span></li>
               <li>Joel Spolsky (2002), <a href="https://www.joelonsoftware.com/2002/06/12/strategy-letter-v/" target="_blank" rel="noopener">“Strategy Letter V”</a>. <span class="src">Joel on Software, June 12, 2002</span></li>
+              <li>NTIA (2024), <a href="https://www.ntia.gov/programs-and-initiatives/artificial-intelligence/open-model-weights-report/policy-approaches-recommendations/recommendations" target="_blank" rel="noopener"><i>Dual-Use Foundation Models with Widely Available Model Weights</i>, recommendations</a>. <span class="src">U.S. Department of Commerce, July 30, 2024</span></li>
             </ul></div>
           <div><p class="label">Optional</p>
             <ul class="reads opt">
@@ -471,7 +528,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
             <label><input type="checkbox" id="s2-2"><span>What does “commoditize your complement” mean?</span></label>
             <label><input type="checkbox" id="s2-3"><span>What does Zuckerberg’s 2024 case for open weights assume about competitors?</span></label>
             <label><input type="checkbox" id="s2-4"><span>What would make open weights lose their value for Meta?</span></label>
-            <label><input type="checkbox" id="s2-5"><span>Which signal would tell you that the strategy should change?</span></label>
+            <label><input type="checkbox" id="s2-5"><span>Which evidence would, under the NTIA report, justify restricting open weights?</span></label>
           </div>
         </div>
       </div>
@@ -544,34 +601,50 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
 
     <!-- SESSION 4 -->
     <article class="session" id="s4">
-      <div class="session-head"><span class="dot" style="--c:var(--brick)">4</span><h3>Case study · Labels, thresholds, and a rule for 2031</h3><span class="mono">Saturday, October 31 · 1:30 to 5:00 pm</span></div>
+      <div class="hw" aria-hidden="true"><svg class="bat" viewBox="0 0 46 24"><g class="wing"><path d="M23 12 C18 2 9 2 1 6 C6 8 8 11 7 15 C11 12 15 13 17 16 C19 13 21 13 23 14 C25 13 27 13 29 16 C31 13 35 12 39 15 C38 11 40 8 45 6 C37 2 28 2 23 12Z"/></g><ellipse cx="23" cy="13" rx="3" ry="4.5"/><path d="M21 9 l1 -3 l1 2 l1 -2 l1 3z"/></svg><svg class="bat b2" viewBox="0 0 46 24"><g class="wing"><path d="M23 12 C18 2 9 2 1 6 C6 8 8 11 7 15 C11 12 15 13 17 16 C19 13 21 13 23 14 C25 13 27 13 29 16 C31 13 35 12 39 15 C38 11 40 8 45 6 C37 2 28 2 23 12Z"/></g><ellipse cx="23" cy="13" rx="3" ry="4.5"/></svg><svg class="spider" viewBox="0 0 22 80" height="80"><line x1="11" y1="0" x2="11" y2="62"/><g class="body"><circle cx="11" cy="66" r="5"/><circle cx="11" cy="72" r="3.5"/></g><g stroke="var(--ink)" stroke-width="1.2" fill="none"><path d="M6 64 l-5 -3 M6 67 l-5 1 M6 69 l-4 4 M16 64 l5 -3 M16 67 l5 1 M16 69 l4 4"/></g></svg></div>
+            <div class="session-head"><span class="dot" style="--c:var(--brick)">4</span><h3>Case study · The Roosevelt Island AI Act<svg class="pumpkin" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7 c-1 -3 1 -5 3 -5" stroke="#4a6b2a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="9.5" cy="18.5" rx="7" ry="10" fill="#d9661f"/><ellipse cx="22.5" cy="18.5" rx="7" ry="10" fill="#d9661f"/><ellipse cx="16" cy="18.5" rx="7.5" ry="11" fill="#ec7a2a"/><path class="glow" d="M9 15 l3 -3 l3 3z M17 15 l3 -3 l3 3z M9 21 q7 6 14 0 l-2 1 l-1 -2 l-2 2 l-2 -2 l-2 2 l-2 -2 l-1 2z"/></svg></h3><span class="mono">Saturday, October 31 · 1:30 to 5:00 pm</span></div>
       <div class="part c4">
         <div class="col">
-          <div class="bet"><span class="label">The bet under test</span><p>“A label attached to AI-generated content survives its distribution.”</p></div>
-          <div class="spoiler" style="border-style:solid"><b>Prepare with your team</b> (Friday, October 30)<br>Redraft a threshold provision for frontier AI, using the data from Session 3, and prepare to defend it against the other teams. Graded as part of the case-study component.</div>
-          <p><b>Label stress test</b><span class="tag">in class · no preparation · 30 min</span><br>Check an image’s Content Credentials with the free Verify tool, pass it through a screenshot, then check again. Then ask which assumption the law relies on.</p>
-          <p><b>Threshold workshop</b><span class="tag">team presentations</span><br>Each team presents its provision and answers the other teams.</p>
-          <p><b>The 2031 card</b><span class="tag">in class · no preparation · 25 min</span><br>Fill in a hypothesis card, alone and without tools, for a rule that does not exist yet.</p>
-          <div class="fact-box"><span class="label">Where the rules stand</span><span>Article 50 of the EU AI Act has applied since August 2, 2026.</span><span>California’s AI Transparency Act became operative on August 2, 2026, after AB 853 moved its start date.</span><span>China’s labelling measures took effect on September 1, 2025.</span></div>
+          <div class="bet"><span class="label">The bet under test</span><p>“A line drawn by law still holds once the technology moves.”</p></div>
+          <p>Roosevelt Island has declared itself a small independent state, and its legislature wants an AI law by the end of the afternoon. The island has a tiny market and a regulator with two staff. Every round of the hearing puts a tool from Lectures 3 and 4 to work, and the mini-lectures add new ones.</p>
+          <div class="spoiler" style="border-style:solid"><b>Prepare with your team</b> (Friday, October 30)<br>The instructor assigns each team a role, usually two teams per role. Graded as part of the case-study component.<br><b>Every team brings</b> a presentation of no more than 8 minutes and one hypothesis card for its position. Legislators also bring their two-page draft.<ul class="roles"><li><span class="role">Island legislators</span><span>Draft a two-page law on frontier models and AI-generated content. For each provision, say whether it is a rule or a standard, and whether it acts before or after harm. One team must use a compute threshold. The other team may not.</span></li><li><span class="role">Developers</span><span>One team plays a frontier lab, the other a startup that builds on open weights. Estimate what a compute threshold and a labelling duty would cost you, per model and as a fixed cost. Each team also receives a secret objective from the instructor and pursues it during the hearing without revealing it.</span></li><li><span class="role">Island regulators</span><span>Design a compliance check you could run with two staff: what you would measure, with which data, and how you would spot a capable model trained below a threshold.</span></li><li><span class="role">Other jurisdictions</span><span>Three teams, each speaking for one jurisdiction: California, China or the EU. Know what your jurisdiction already requires on thresholds and labels, and the conditions under which you would copy a law written by a small state.</span></li></ul></div>
+          <p class="run-intro"><b>In class</b> (times are approximate). Between presentations, the instructor gives short mini-lectures. Each one introduces a new concept and connects it to what the teams just presented. Expect to be asked whether the concept changes your position.</p>
+          <ol class="run">
+            <li><span class="t">1:30</span><span class="w"><b>The hearing opens: legislator teams present their drafts</b></span></li>
+            <li class="mini"><span class="t">1:46</span><span class="w"><b class="k">Mini-lecture · Goodhart’s law</b>A measure that becomes a target stops measuring well. Strathern (1997), applied to the compute thresholds in the drafts.</span></li>
+            <li><span class="t">1:56</span><span class="w"><b>Developer teams testify</b></span></li>
+            <li class="mini"><span class="t">2:12</span><span class="w"><b class="k">Mini-lecture · Raising rivals’ costs</b>A firm can gain from a rule that costs it money, if the rule costs its rivals more. Salop &amp; Scheffman (1983), applied to the developers’ testimony.</span></li>
+            <li><span class="t">2:22</span><span class="w"><b>Capture audit</b><span class="tag">in class · no preparation</span><br>The class guesses each developer team’s secret objective, then applies the definition of capture from Carpenter &amp; Moss to the drafts. Who were the bootleggers in this hearing, and who were the Baptists?</span></li>
+            <li><span class="t">2:42</span><span class="w"><b>Regulator teams present their compliance checks</b> and say whether they could enforce each draft with two staff.</span></li>
+            <li class="mini"><span class="t">2:58</span><span class="w"><b class="k">Mini-lecture · Responsive regulation</b>Ayres &amp; Braithwaite (1992) and the enforcement pyramid, which starts with persuasion and escalates only when a firm does not comply. Applied to a regulator with two staff.</span></li>
+            <li class="brk"><span class="t">3:08</span><span class="w">Break</span></li>
+            <li><span class="t">3:18</span><span class="w"><b>California, China and EU teams present</b></span></li>
+            <li class="mini"><span class="t">3:42</span><span class="w"><b class="k">Mini-lecture · Network effects and standards</b>A label is worth attaching only if platforms read it, and worth reading only if most content carries one. Katz &amp; Shapiro (1985), applied to Content Credentials and to why jurisdictions copy each other.</span></li>
+            <li><span class="t">3:52</span><span class="w"><b>Label stress test</b><span class="tag">in class · no preparation</span><br>An image with Content Credentials goes through a screenshot. Does the Verify tool still find them? The three delegations then explain how SB 942, China’s labelling measures and Article 50 of the EU AI Act treat the stripped image.</span></li>
+            <li><span class="t">4:12</span><span class="w"><b>Event cards</b><span class="tag">in class · no preparation</span><br>The instructor draws cards that change the world after the law passes. A model trained below your threshold matches the frontier. A developer announces it will not launch on the island. After each card, legislators defend their draft, and the three delegations decide whether their jurisdiction would still copy it, using Bradford’s conditions.</span></li>
+            <li><span class="t">4:37</span><span class="w"><b>The vote and the 2031 card</b><span class="tag">in class · no preparation</span><br>The class votes for the draft most likely to still work in 2031. Then each student fills in a hypothesis card alone, without AI or devices, for a rule that does not exist yet.</span></li>
+          </ol>
+          <div class="spoiler"><b>The scoreboard.</b> Drafts earn points when they pass the regulators’ check and survive an event card. They lose a point for each capture flag the class confirms. The scoreboard is for fun and does not set grades.</div>
+          <div class="fact-box"><span class="label">Where the rules stand</span><span>California’s AI Transparency Act became operative on August 2, 2026, after AB 853 moved its start date.</span><span>China’s labelling measures took effect on September 1, 2025.</span><span>New York amended its RAISE Act on March 27, 2026 to adopt California’s frontier thresholds.</span></div>
         </div>
         <div class="col">
           <div><p class="label">Required (short legal texts)</p>
             <ul class="reads">
-              <li>Regulation (EU) 2024/1689, the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">AI Act</a>, Articles 50 and 51.</li>
               <li>California <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB942" target="_blank" rel="noopener">SB 942</a> (AI Transparency Act, 2024), as amended by <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB853" target="_blank" rel="noopener">AB 853</a> (2025), and the definitions in <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB53" target="_blank" rel="noopener">SB 53</a> (Transparency in Frontier Artificial Intelligence Act, 2025).</li>
+              <li>Cyberspace Administration of China et al. (2025), <a href="https://www.chinalawtranslate.com/en/ai-labeling/" target="_blank" rel="noopener">Measures for Labeling of AI-Generated Synthetic Content</a>. <span class="src">English translation, China Law Translate</span></li>
             </ul></div>
           <div><p class="label">Optional</p>
             <ul class="reads opt">
+              <li>Regulation (EU) 2024/1689, the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">AI Act</a>, Articles 50 and 51. <span class="src">Required for the EU delegation</span></li>
               <li>Iyngkarran Kumar &amp; Sam Manning (2025), <a href="https://arxiv.org/abs/2504.16138" target="_blank" rel="noopener">“Trends in Frontier AI Model Count: A Forecast to 2028”</a>. <span class="src">arXiv:2504.16138</span></li>
-              <li>European Commission (2026), <a href="https://digital-strategy.ec.europa.eu/en/news/strong-backing-code-practice-transparency-ai-generated-content" target="_blank" rel="noopener">announcement of the code of practice on transparency of AI-generated content</a>. <span class="src">About 190 signatories by the end of July 2026</span></li>
             </ul></div>
           <div class="checks" data-session="s4">
             <div class="progress"><span class="label">Self-check</span><span class="bar"><i></i></span><span class="count tabnum">0/5</span></div>
-            <label><input type="checkbox" id="s4-1"><span>What does Article 50(2) of the AI Act require from providers of generative AI?</span></label>
-            <label><input type="checkbox" id="s4-2"><span>How does a visible label differ from an invisible watermark?</span></label>
-            <label><input type="checkbox" id="s4-3"><span>Which threshold covers more of today’s models, the EU’s or California’s?</span></label>
-            <label><input type="checkbox" id="s4-4"><span>What makes a watermark resistant to editing?</span></label>
-            <label><input type="checkbox" id="s4-5"><span>When is one global labelling design cheaper than one design per market?</span></label>
+            <label><input type="checkbox" id="s4-1"><span>What does SB 942 require from a covered provider?</span></label>
+            <label><input type="checkbox" id="s4-2"><span>Why would New York adopt California’s thresholds instead of writing its own?</span></label>
+            <label><input type="checkbox" id="s4-3"><span>Under a compute threshold, who carries the heavier fixed cost, a frontier lab or a startup?</span></label>
+            <label><input type="checkbox" id="s4-4"><span>What evidence would a claim of capture need under Carpenter &amp; Moss?</span></label>
+            <label><input type="checkbox" id="s4-5"><span>Is labelling a divisible product, and what follows for a California effect?</span></label>
           </div>
         </div>
       </div>
@@ -589,6 +662,13 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
         <li>Garrett A. Johnson, Scott K. Shriver &amp; Samuel G. Goldberg (2023), <a href="https://doi.org/10.1287/mnsc.2023.4709" target="_blank" rel="noopener">“Privacy and Market Concentration: Intended and Unintended Consequences of the GDPR”</a>. <span class="src">Management Science 69(10): 5695-5721</span></li>
         <li>David Vogel (1995), <i>Trading Up: Consumer and Environmental Regulation in a Global Economy</i>. <span class="src">Harvard University Press</span></li>
         <li>Varun Magesh et al. (2025), <a href="https://doi.org/10.1111/jels.12413" target="_blank" rel="noopener">“Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools”</a>. <span class="src">Journal of Empirical Legal Studies 22(2): 216-242</span></li>
+        <li>Josh Lerner &amp; Jean Tirole (2002), <a href="https://doi.org/10.1111/1467-6451.00174" target="_blank" rel="noopener">“Some Simple Economics of Open Source”</a>. <span class="src">Journal of Industrial Economics 50(2): 197-234</span></li>
+        <li>Benjamin Klein, Robert G. Crawford &amp; Armen A. Alchian (1978), <a href="https://doi.org/10.1086/466922" target="_blank" rel="noopener">“Vertical Integration, Appropriable Rents, and the Competitive Contracting Process”</a>. <span class="src">Journal of Law and Economics 21(2): 297-326</span></li>
+        <li>Kenneth J. Arrow &amp; Anthony C. Fisher (1974), <a href="https://doi.org/10.2307/1883074" target="_blank" rel="noopener">“Environmental Preservation, Uncertainty, and Irreversibility”</a>. <span class="src">Quarterly Journal of Economics 88(2): 312-319</span></li>
+        <li>Marilyn Strathern (1997), <a href="https://doi.org/10.1002/(SICI)1234-981X(199707)5:3%3C305::AID-EURO184%3E3.0.CO;2-4" target="_blank" rel="noopener">“‘Improving Ratings’: Audit in the British University System”</a>. <span class="src">European Review 5(3): 305-321</span></li>
+        <li>Steven C. Salop &amp; David T. Scheffman (1983), <a href="https://ideas.repec.org/a/aea/aecrev/v73y1983i2p267-71.html" target="_blank" rel="noopener">“Raising Rivals’ Costs”</a>. <span class="src">American Economic Review 73(2): 267-271</span></li>
+        <li>Ian Ayres &amp; John Braithwaite (1992), <a href="https://doi.org/10.1093/oso/9780195070705.001.0001" target="_blank" rel="noopener"><i>Responsive Regulation: Transcending the Deregulation Debate</i></a>. <span class="src">Oxford University Press</span></li>
+        <li>Michael L. Katz &amp; Carl Shapiro (1985), <a href="https://ideas.repec.org/a/aea/aecrev/v75y1985i3p424-40.html" target="_blank" rel="noopener">“Network Externalities, Competition, and Compatibility”</a>. <span class="src">American Economic Review 75(3): 424-440</span></li>
       </ul>
     </div>
   </div>
@@ -613,14 +693,14 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
       </form>
       <aside class="example" aria-labelledby="ex-title">
         <p class="eyebrow">Worked example</p>
-        <h3 id="ex-title">EU AI Act, Article 51</h3>
+        <h3 id="ex-title">California SB 53</h3>
         <ol>
-          <li>General-purpose AI models trained with more than 10<sup>25</sup> FLOP are presumed to have high-impact capabilities. Enacted. Targets the model.</li>
+          <li>A frontier model is one trained with more than 10<sup>26</sup> FLOP, and the heaviest duties fall on developers with more than $500 million in annual revenue. Enacted. Targets the developer.</li>
           <li>Training compute tracks what a model can do.</li>
-          <li>Few firms can afford training runs that large, so the rule reaches a handful of frontier developers.</li>
+          <li>Few firms can afford training runs that large, so the rule reaches a handful of developers.</li>
           <li>If compute stops tracking capability, risky models below the line escape the rule, and models above it carry costs without matching risk.</li>
-          <li>Models below 10<sup>25</sup> FLOP that score at frontier level, and the share of new models with no public compute estimate.</li>
-          <li>Article 51(3) lets the Commission amend the threshold by delegated act.</li>
+          <li>Models below 10<sup>26</sup> FLOP that score at frontier level, and the share of new models with no public compute estimate.</li>
+          <li>The California Department of Technology reviews the definitions every year and recommends updates to the Legislature.</li>
         </ol>
       </aside>
     </div>
@@ -640,7 +720,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
           <tr><td>A founder</td><td>Know at what revenue or compute level your company will cross each threshold, and turn that into a regulatory roadmap your investors can read.</td></tr>
           <tr><td>A regulator</td><td>Choose the indicator that will show a rule failing, and write the clause that allows it to be corrected.</td></tr>
           <tr><td>A lawyer</td><td>Draft a provision, then explain it to the engineer who has to implement it.</td></tr>
-          <tr><td>An engineer</td><td>Turn a legal obligation into a technical test, such as a watermark robustness test for Article 50.</td></tr>
+          <tr><td>An engineer</td><td>Turn a legal obligation into a technical test, such as a watermark robustness test for California’s AI Transparency Act.</td></tr>
         </tbody>
       </table>
     </div>
@@ -743,7 +823,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
 <footer class="wrap">
   <p class="sign">Think across silos, act with clarity.</p>
   <p><a href="mailto:tschrepel@cornell.edu">tschrepel@cornell.edu</a></p>
-  <p class="mono" style="color:var(--muted)">LAW 6337 · Cornell Tech · Fall 2026 · Page updated October 2026</p>
+  <p class="mono" style="color:var(--muted)">LAW 6337 · <a href="https://tech.cornell.edu/" target="_blank" rel="noopener">Cornell Tech</a> · <a href="https://www.lawschool.cornell.edu/" target="_blank" rel="noopener">Cornell Law School</a> · Fall 2026 · Page updated October 2026</p>
 </footer>
 
 <script>
@@ -812,12 +892,12 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
     });
   });
   var example = [
-    "EU AI Act, Article 51. General-purpose AI models trained with more than 10^25 FLOP are presumed to have high-impact capabilities. Enacted. Targets the model.",
+    "California SB 53. A frontier model is one trained with more than 10^26 FLOP, and the heaviest duties fall on developers with more than $500 million in annual revenue. Enacted. Targets the developer.",
     "Training compute tracks what a model can do.",
-    "Few firms can afford training runs that large, so the rule reaches a handful of frontier developers.",
+    "Few firms can afford training runs that large, so the rule reaches a handful of developers.",
     "If compute stops tracking capability, risky models below the line escape the rule, and models above it carry costs without matching risk.",
-    "Models below 10^25 FLOP that score at frontier level, and the share of new models with no public compute estimate.",
-    "Article 51(3) lets the Commission amend the threshold by delegated act."
+    "Models below 10^26 FLOP that score at frontier level, and the share of new models with no public compute estimate.",
+    "The California Department of Technology reviews the definitions every year and recommends updates to the Legislature."
   ];
   document.getElementById("hc-example").addEventListener("click", function(){
     ids.forEach(function(id, k){ var ta = document.getElementById(id); ta.value = example[k]; saved[id] = example[k]; });
