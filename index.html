@@ -33,6 +33,11 @@
   --leaf-3:#9e3424;
   --leaf-4:#6f7d2e;
   --focus:#1d4ed8;
+  --tram:#c8102e;
+  --cab:#f2b705;
+  --road:#2a3038;
+  --river:#86a9c4;
+  --sign:#1d6b3e;
   --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -50,6 +55,7 @@
     --maple:#e8774a; --ginkgo:#f0b941; --park:#6db38f; --brick:#e06a5b; --on-accent:#0c1219;
     --sky-top:#070c16; --sky-bottom:#2b2347; --skyline:#03060b; --window:#ffcf6b;
     --leaf-1:#e8774a; --leaf-2:#f0b941; --leaf-3:#c9503f; --leaf-4:#9aa84a; --focus:#8ab4ff;
+    --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52;
     color-scheme:dark;
   }
 }
@@ -58,6 +64,7 @@
   --maple:#e8774a; --ginkgo:#f0b941; --park:#6db38f; --brick:#e06a5b; --on-accent:#0c1219;
   --sky-top:#070c16; --sky-bottom:#2b2347; --skyline:#03060b; --window:#ffcf6b;
   --leaf-1:#e8774a; --leaf-2:#f0b941; --leaf-3:#c9503f; --leaf-4:#9aa84a; --focus:#8ab4ff;
+  --tram:#ff4d5e; --cab:#f7c948; --road:#05080c; --river:#1f3a52; --sign:#2c8a52;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -229,7 +236,47 @@ td:first-child{font-weight:650;white-space:nowrap}
 .res a span{color:var(--muted);font-size:.9rem}
 footer{border-top:1px solid var(--rule);padding-block:2.5rem;display:grid;gap:.5rem}
 footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step-2)}
+
+/* NYC details */
+.street-sign{display:inline-block;width:fit-content;margin-top:.35rem;background:var(--sign);color:#fff;font-family:var(--f-body);font-variation-settings:"wdth" 70;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;padding:.18rem .55rem;border-radius:3px;border:1.5px solid #fff;box-shadow:0 0 0 1.5px var(--sign);transform-origin:top center;animation:sway 5s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.section-head{position:relative}
+.drift{position:absolute;right:4%;top:.2rem;width:14px;height:22px;border-radius:0 100% 0 100%;background:var(--maple);opacity:.85;animation:drift 7s ease-in-out infinite;pointer-events:none}
+.drift.g{background:var(--ginkgo);right:12%;animation-duration:9s;animation-delay:-3s}
+@keyframes drift{0%{transform:translate(0,0) rotate(10deg)}25%{transform:translate(-18px,14px) rotate(-25deg)}50%{transform:translate(6px,30px) rotate(30deg)}75%{transform:translate(-10px,44px) rotate(-10deg)}100%{transform:translate(0,0) rotate(10deg)}}
+.session-head .dot{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.session:hover .session-head .dot{transform:rotate(-12deg) scale(1.08)}
+.tramway{position:relative;height:170px;overflow:hidden;border-block:1px solid var(--rule);background:linear-gradient(180deg,var(--bg) 0%,color-mix(in srgb,var(--river) 22%,var(--bg)) 100%)}
+.tramway .skyline{position:absolute;left:0;right:0;bottom:26px;width:100%;height:80px}
+.tramway .skyline rect{fill:color-mix(in srgb,var(--skyline) 70%,var(--bg))}
+.tramway .river{position:absolute;left:0;right:0;bottom:0;height:28px;background:repeating-linear-gradient(90deg,var(--river) 0 40px,color-mix(in srgb,var(--river) 70%,var(--bg)) 40px 46px);animation:flow 12s linear infinite}
+@keyframes flow{to{background-position:460px 0}}
+.tramway .cable{position:absolute;left:0;right:0;height:1.5px;background:var(--ink);opacity:.55}
+.tramway .cable.c1{top:34px}.tramway .cable.c2{top:40px}
+.tramway .tower{position:absolute;bottom:26px;width:14px;height:130px;background:linear-gradient(var(--ink),var(--ink)) center/3px 100% no-repeat;opacity:.7}
+.tramway .tower::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:var(--ink);border-radius:2px}
+.tramway .tower.t1{left:6%}.tramway .tower.t2{right:6%}
+.cabin{position:absolute;top:36px;left:0;width:78px;animation:ride-tram 26s ease-in-out infinite alternate}
+.cabin svg{display:block;width:78px;height:auto;transform-origin:50% 0;animation:swing 3.2s ease-in-out infinite}
+@keyframes ride-tram{0%{transform:translateX(8vw)}100%{transform:translateX(calc(min(100vw,1400px) - 8vw - 78px))}}
+@keyframes swing{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.cabin .body{fill:var(--tram)}.cabin .win{fill:var(--window)}.cabin .hang{stroke:var(--ink);stroke-width:2}.cabin .trim{fill:var(--ink)}
+.tram-label{position:absolute;right:clamp(16px,4vw,40px);top:10px;font-family:var(--f-mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.street{position:relative;height:74px;overflow:hidden;background:var(--road);margin-top:2rem}
+.street::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,var(--cab) 0 34px,transparent 34px 70px);opacity:.75}
+.taxi{position:absolute;bottom:8px;left:0;width:92px;animation:drive 14s linear infinite}
+.taxi svg{display:block;width:92px;height:auto}
+.taxi .b{fill:var(--cab)}.taxi .w{fill:color-mix(in srgb,var(--river) 60%,#fff)}.taxi .t{fill:#14181d}.taxi .s{fill:#fff}
+@keyframes drive{0%{transform:translateX(-120px)}100%{transform:translateX(calc(100vw + 120px))}}
+.manhole{position:absolute;right:22%;bottom:10px;width:44px;height:8px;border-radius:50%;background:#000;opacity:.55}
+.steam{position:absolute;right:calc(22% + 6px);bottom:14px;width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,#ffffff 55%,transparent);filter:blur(7px);animation:steam 4s ease-out infinite;pointer-events:none}
+.steam.s2{animation-delay:-1.3s;right:calc(22% + 14px)}.steam.s3{animation-delay:-2.6s;right:calc(22% + 2px)}
+@keyframes steam{0%{transform:translateY(0) scale(.6);opacity:.0}20%{opacity:.7}100%{transform:translateY(-70px) scale(1.6);opacity:0}}
 @media (prefers-reduced-motion:reduce){
+  .street-sign,.drift,.cabin,.cabin svg,.tramway .river,.taxi,.steam{animation:none}
+  .taxi{transform:translateX(40vw)}
+  .steam{opacity:.4}
+
   html{scroll-behavior:auto}
   .ticker-track{animation:none;width:auto}
   .ticker-track p{white-space:normal;flex-wrap:wrap;row-gap:.4rem}
@@ -269,16 +316,16 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
 <div class="wrap">
   <div class="facts">
     <div class="fact"><span class="eyebrow">When</span><b>Thursdays &amp; Saturdays</b><span class="tabnum">Oct 22, 24, 29, 31 · 1:30 to 5:00 pm ET</span></div>
-    <div class="fact"><span class="eyebrow">Where</span><b>Cornell Tech, Roosevelt Island</b><small>Section 030 in person · Section 001 live online. Room on Canvas.</small></div>
+    <div class="fact"><span class="eyebrow">Where</span><b>Cornell Tech, Roosevelt Island</b><span class="street-sign" aria-label="2 West Loop Road">W Loop Rd</span><small>Section 030 in person · Section 001 live online. Room on Canvas.</small></div>
     <div class="fact"><span class="eyebrow">Credit</span><b>1 credit</b><small>Letter grade. Section 030 may choose S/U. Roster title: Law, Technology, and Economy of AI.</small></div>
-    <div class="fact"><span class="eyebrow">Instructor</span><b>Thibault Schrepel</b><small>Questions on Canvas or after class</small></div>
+    <div class="fact"><span class="eyebrow">Instructor</span><b><a href="https://thibaultschrepel.com/" target="_blank" rel="noopener">Thibault Schrepel</a></b><small><a href="mailto:tschrepel@cornell.edu">tschrepel@cornell.edu</a> · or ask after class</small></div>
   </div>
 </div>
 
 <div class="ticker" role="marquee" aria-label="Key dates">
   <div class="ticker-track">
-    <p><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>After Oct 31 · Take-home exam on the registrar’s schedule</span></p>
-    <p aria-hidden="true"><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>After Oct 31 · Take-home exam on the registrar’s schedule</span></p>
+    <p><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>Take-home exam · date set by the registrar</span></p>
+    <p aria-hidden="true"><span>What must be true for this rule to work?</span><span>Thu Oct 22 · Architecture &amp; economics</span><span>Fri Oct 23 · Last day to drop</span><span>Sat Oct 24 · The open-weights bet</span><span>Thu Oct 29 · Regulation &amp; how rules travel</span><span>Sat Oct 31 · Labels, thresholds, 2031</span><span>Take-home exam · date set by the registrar</span></p>
   </div>
 </div>
 
@@ -287,7 +334,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">The course in four sentences</p>
-      <h2>One claim per session</h2>
+      <h2>One claim per session</h2><span class="drift" aria-hidden="true"></span><span class="drift g" aria-hidden="true"></span>
       <p>Each session opens and closes with its claim. If you remember four sentences in five years, make it these.</p>
     </div>
     <div class="theses">
@@ -299,7 +346,8 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
   </div>
 </section>
 
-<section class="block" id="schedule" style="padding-top:0">
+<div class="tramway" aria-hidden="true"><div class="cable c1"></div><div class="cable c2"></div><div class="tower t1"></div><div class="tower t2"></div><svg class="skyline" viewBox="0 0 1400 80" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="7" width="42" height="73"/><rect x="46" y="30" width="42" height="50"/><rect x="88" y="11" width="25" height="69"/><rect x="113" y="34" width="20" height="46"/><rect x="133" y="24" width="16" height="56"/><rect x="153" y="23" width="24" height="57"/><rect x="164" y="9" width="2" height="14"/><rect x="177" y="60" width="17" height="20"/><rect x="194" y="13" width="15" height="67"/><rect x="213" y="29" width="26" height="51"/><rect x="241" y="62" width="45" height="18"/><rect x="290" y="36" width="31" height="44"/><rect x="321" y="42" width="30" height="38"/><rect x="353" y="58" width="15" height="22"/><rect x="368" y="56" width="39" height="24"/><rect x="411" y="61" width="18" height="19"/><rect x="429" y="49" width="27" height="31"/><rect x="456" y="38" width="44" height="42"/><rect x="504" y="58" width="40" height="22"/><rect x="544" y="41" width="31" height="39"/><rect x="558" y="27" width="2" height="14"/><rect x="577" y="36" width="14" height="44"/><rect x="591" y="47" width="22" height="33"/><rect x="613" y="33" width="17" height="47"/><rect x="630" y="34" width="26" height="46"/><rect x="656" y="21" width="40" height="59"/><rect x="700" y="49" width="40" height="31"/><rect x="719" y="35" width="2" height="14"/><rect x="742" y="49" width="15" height="31"/><rect x="757" y="53" width="16" height="27"/><rect x="775" y="13" width="14" height="67"/><rect x="791" y="58" width="38" height="22"/><rect x="809" y="44" width="2" height="14"/><rect x="829" y="62" width="29" height="18"/><rect x="860" y="54" width="43" height="26"/><rect x="907" y="7" width="22" height="73"/><rect x="929" y="4" width="33" height="76"/><rect x="962" y="52" width="26" height="28"/><rect x="988" y="6" width="38" height="74"/><rect x="1026" y="59" width="40" height="21"/><rect x="1045" y="45" width="2" height="14"/><rect x="1066" y="46" width="46" height="34"/><rect x="1116" y="36" width="30" height="44"/><rect x="1150" y="29" width="32" height="51"/><rect x="1182" y="48" width="22" height="32"/><rect x="1204" y="49" width="31" height="31"/><rect x="1235" y="58" width="15" height="22"/><rect x="1254" y="59" width="29" height="21"/><rect x="1267" y="45" width="2" height="14"/><rect x="1285" y="29" width="37" height="51"/><rect x="1322" y="39" width="19" height="41"/><rect x="1345" y="20" width="35" height="60"/><rect x="1380" y="3" width="16" height="77"/><rect x="1387" y="-11" width="2" height="14"/><rect x="1398" y="60" width="33" height="20"/><rect x="1413" y="46" width="2" height="14"/></svg><div class="river"></div><div class="cabin"><svg viewBox="0 0 78 54" aria-hidden="true"><line class="hang" x1="39" y1="0" x2="39" y2="14"/><rect class="trim" x="30" y="10" width="18" height="5" rx="2"/><rect class="body" x="4" y="15" width="70" height="34" rx="7"/><rect class="win" x="11" y="21" width="12" height="11" rx="2"/><rect class="win" x="27" y="21" width="12" height="11" rx="2"/><rect class="win" x="43" y="21" width="12" height="11" rx="2"/><rect class="win" x="59" y="21" width="9" height="11" rx="2"/><rect class="trim" x="4" y="41" width="70" height="3"/></svg></div></div>
+<section class="block" id="schedule">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Schedule</p>
@@ -315,7 +363,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
         <li class="stop major"><span class="dot" style="--c:var(--park)">3</span><span class="when">Thu Oct 29</span><a class="what" href="#s3">Regulation &amp; how rules travel</a></li>
         <li class="stop minor"><span class="dot"></span><span class="when">Fri Oct 30</span><span class="what">Team prep</span></li>
         <li class="stop major"><span class="dot" style="--c:var(--brick)">4</span><span class="when">Sat Oct 31</span><a class="what" href="#s4">Case study: labels, thresholds, 2031</a></li>
-        <li class="stop minor"><span class="dot"></span><span class="when">After Oct 31</span><span class="what">Take-home exam, date set by the registrar</span></li>
+        <li class="stop minor"><span class="dot"></span><span class="when">Registrar’s date</span><span class="what">Take-home exam</span></li>
         <li class="stop minor"><span class="dot"></span><span class="when">About a month later</span><span class="what">One short case by email</span></li>
       </ol>
       <p class="route-note">All sessions run 1:30 to 5:00 pm Eastern Time. Laptops stay closed during lectures and open in the exercise windows marked <span class="tag c1" style="margin-left:0">laptops out</span>. Online students keep their devices on throughout.</p>
@@ -327,8 +375,8 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Sessions</p>
-      <h2>Every session tests one bet</h2>
-      <p>Each block names the bet under test, what we do in class, what to read, and five self-check questions. Tick a question when you can answer it from memory. Your ticks stay in this browser only.</p>
+      <h2>Every session tests one bet</h2><span class="drift" aria-hidden="true"></span><span class="drift g" aria-hidden="true"></span>
+      <p>Each block names the bet under test, what we do in class, what to read, and five self-check questions. Tick a question when you can answer it from memory. Your ticks stay in this browser only. Readings marked “PDF on Canvas” sit behind a paywall; you will find them on Canvas.</p>
     </div>
 
     <!-- SESSION 1 -->
@@ -353,7 +401,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
             <ul class="reads opt">
               <li>Ashish Vaswani et al. (2017), <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">“Attention Is All You Need”</a>. <span class="src">arXiv:1706.03762</span></li>
               <li>Toby Ord (2025), <a href="https://www.governance.ai/research-paper/inference-scaling-and-ai-governance" target="_blank" rel="noopener">“Inference Scaling and AI Governance”</a>. <span class="src">Centre for the Governance of AI</span></li>
-              <li>Thibault Schrepel &amp; Jason Potts (2025), <a href="https://doi.org/10.1080/13600834.2025.2461953" target="_blank" rel="noopener">“Measuring the Openness of AI Foundation Models: Competition and Policy Implications”</a>. <span class="src">Information &amp; Communications Technology Law 34(3): 279-304</span></li>
+              <li>Thibault Schrepel &amp; Jason Potts (2025), <a href="https://doi.org/10.1080/13600834.2025.2461953" target="_blank" rel="noopener">“Measuring the Openness of AI Foundation Models: Competition and Policy Implications”</a>. <span class="src">Information &amp; Communications Technology Law 34(3): 279-304</span> <span class="tag">PDF on Canvas</span></li>
             </ul></div>
           <div class="checks" data-session="s1a">
             <div class="progress"><span class="label">Self-check</span><span class="bar"><i></i></span><span class="count tabnum">0/5</span></div>
@@ -377,13 +425,13 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
         <div class="col">
           <div><p class="label">Required</p>
             <ul class="reads">
-              <li>Anton Korinek &amp; Jai Vipra (2025), <a href="https://doi.org/10.1093/epolic/eiae057" target="_blank" rel="noopener">“Concentrating intelligence: scaling and market structure in artificial intelligence”</a>. <span class="src">Economic Policy 40(121): 225-256</span></li>
+              <li>Anton Korinek &amp; Jai Vipra (2025), <a href="https://doi.org/10.1093/epolic/eiae057" target="_blank" rel="noopener">“Concentrating intelligence: scaling and market structure in artificial intelligence”</a>. <span class="src">Economic Policy 40(121): 225-256</span> <span class="tag">PDF on Canvas</span></li>
               <li>Mert Demirer, Andrey Fradkin &amp; Nadav Tadelis (2026), <a href="https://www.aeaweb.org/articles?id=10.1257/jep.20261506" target="_blank" rel="noopener">“The Emerging Market for Intelligence: How Firms Buy and Sell AI”</a>. <span class="src">Journal of Economic Perspectives 40(3): 23-46</span></li>
             </ul></div>
           <div><p class="label">Optional</p>
             <ul class="reads opt">
-              <li>Pierre Azoulay, Joshua L. Krieger &amp; Abhishek Nagaraj (2025), <a href="https://www.nber.org/papers/w32474" target="_blank" rel="noopener">“Old Moats for New Models: Openness, Control, and Competition in Generative AI”</a>. <span class="src">Entrepreneurship and Innovation Policy and the Economy, vol. 4 (NBER WP 32474)</span></li>
-              <li>Thibault Schrepel &amp; Alex Pentland (2025), <a href="https://doi.org/10.1093/icc/dtae042" target="_blank" rel="noopener">“Competition between AI foundation models: dynamics and policy recommendations”</a>. <span class="src">Industrial and Corporate Change 34(5): 1085-1103</span></li>
+              <li>Pierre Azoulay, Joshua L. Krieger &amp; Abhishek Nagaraj (2025), <a href="https://www.nber.org/papers/w32474" target="_blank" rel="noopener">“Old Moats for New Models: Openness, Control, and Competition in Generative AI”</a>. <span class="src">Entrepreneurship and Innovation Policy and the Economy, vol. 4 (NBER WP 32474)</span> <span class="tag">PDF on Canvas</span></li>
+              <li>Thibault Schrepel &amp; Alex Pentland (2025), <a href="https://doi.org/10.1093/icc/dtae042" target="_blank" rel="noopener">“Competition between AI foundation models: dynamics and policy recommendations”</a>. <span class="src">Industrial and Corporate Change 34(5): 1085-1103</span> <span class="tag">PDF on Canvas</span></li>
             </ul></div>
           <div class="checks" data-session="s1b">
             <div class="progress"><span class="label">Self-check</span><span class="bar"><i></i></span><span class="count tabnum">0/5</span></div>
@@ -403,7 +451,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
       <div class="part c2">
         <div class="col">
           <div class="bet"><span class="label">The bet under test</span><p>“Giving away model weights is a durable strategy.”</p></div>
-          <p>Your team plays Meta. Five real events are revealed one at a time. After each one, you decide what Meta should do, then compare with what Meta did and name the assumption that broke. Online teams play the same timeline in breakout rooms.</p>
+          <p>Your team plays Meta. Five real events are revealed one at a time. After each one, you decide what Meta should do, then compare with what Meta did and name the assumption that broke.</p>
           <p><b>Deliverable</b><br>A team presentation on the bet behind Meta’s strategy and the indicator that should have triggered a change. Graded as part of the case-study component.</p>
           <div class="spoiler"><b>One request.</b> Please do not look up Meta’s AI announcements after July 2024 before class. The game works best when you decide before you know.</div>
         </div>
@@ -443,13 +491,13 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
         <div class="col">
           <div><p class="label">Required</p>
             <ul class="reads">
-              <li>George J. Stigler (1971), <a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">“The Theory of Economic Regulation”</a>. <span class="src">Bell Journal of Economics and Management Science 2(1): 3</span></li>
+              <li>George J. Stigler (1971), <a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">“The Theory of Economic Regulation”</a>. <span class="src">Bell Journal of Economics and Management Science 2(1): 3</span> <span class="tag">PDF on Canvas</span></li>
               <li>Neel Guha et al. (2024), <a href="https://www.gwlr.org/ai-regulation-has-its-own-alignment-problem-the-technical-and-institutional-feasibility-of-disclosure-registration-licensing-and-auditing/" target="_blank" rel="noopener">“AI Regulation Has Its Own Alignment Problem: The Technical and Institutional Feasibility of Disclosure, Registration, Licensing, and Auditing”</a>. <span class="src">George Washington Law Review 92(6): 1473</span></li>
             </ul></div>
           <div><p class="label">Optional</p>
             <ul class="reads opt">
-              <li>Bruce Yandle (1983), “Bootleggers and Baptists: The Education of a Regulatory Economist”. <span class="src">Regulation 7(3): 12-16</span></li>
-              <li>Daniel Carpenter &amp; David A. Moss, eds. (2013), <a href="https://doi.org/10.1017/CBO9781139565875" target="_blank" rel="noopener"><i>Preventing Regulatory Capture: Special Interest Influence and How to Limit It</i></a>, introduction. <span class="src">Cambridge University Press</span></li>
+              <li>Bruce Yandle (1983), “Bootleggers and Baptists: The Education of a Regulatory Economist”. <span class="src">Regulation 7(3): 12-16</span> <span class="tag">PDF on Canvas</span></li>
+              <li>Daniel Carpenter &amp; David A. Moss, eds. (2013), <a href="https://doi.org/10.1017/CBO9781139565875" target="_blank" rel="noopener"><i>Preventing Regulatory Capture: Special Interest Influence and How to Limit It</i></a>, introduction. <span class="src">Cambridge University Press</span> <span class="tag">PDF on Canvas</span></li>
               <li>Noam Kolt, Michal Shur-Ofry &amp; Reuven Cohen (2025), <a href="https://doi.org/10.1016/j.patter.2025.101341" target="_blank" rel="noopener">“Lessons from Complex Systems Science for AI Governance”</a>. <span class="src">Patterns 6(8): 101341</span></li>
             </ul></div>
           <div class="checks" data-session="s3a">
@@ -479,7 +527,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
           <div><p class="label">Optional</p>
             <ul class="reads opt">
               <li>Scott Singer &amp; Matt Sheehan (2026), <a href="https://carnegieendowment.org/research/2026/02/china-is-worried-about-ai-companions-heres-what-its-doing-about-them" target="_blank" rel="noopener">“China Is Worried About AI Companions. Here’s What It’s Doing About Them”</a>. <span class="src">Carnegie Endowment for International Peace</span></li>
-              <li>Marco Almada &amp; Anca Radu (2024), <a href="https://doi.org/10.1017/glj.2023.108" target="_blank" rel="noopener">“The Brussels Side-Effect: How the AI Act Can Reduce the Global Reach of EU Policy”</a>. <span class="src">German Law Journal 25(4): 646-663</span></li>
+              <li>Marco Almada &amp; Anca Radu (2024), <a href="https://doi.org/10.1017/glj.2023.108" target="_blank" rel="noopener">“The Brussels Side-Effect: How the AI Act Can Reduce the Global Reach of EU Policy”</a>. <span class="src">German Law Journal 25(4): 646-663</span> <span class="tag">PDF on Canvas</span></li>
               <li>Lucas Wright et al. (2024), <a href="https://doi.org/10.1145/3630106.3658998" target="_blank" rel="noopener">“Null Compliance: NYC Local Law 144 and the Challenges of Algorithm Accountability”</a>. <span class="src">FAccT ’24: 1701-1713</span></li>
             </ul></div>
           <div class="checks" data-session="s3b">
@@ -549,7 +597,7 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">The tool you keep</p>
-      <h2>The hypothesis card</h2>
+      <h2>The hypothesis card</h2><span class="drift" aria-hidden="true"></span><span class="drift g" aria-hidden="true"></span>
       <p>One page, six lines. You fill it in every session, for rules and for business strategies, and once more for the exam. Drafts save in this browser only.</p>
     </div>
     <div class="card-grid">
@@ -620,25 +668,25 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Grading &amp; workload</p>
-      <h2>Two grades, one final mark</h2>
+      <h2>Two grades, one final mark</h2><span class="drift" aria-hidden="true"></span><span class="drift g" aria-hidden="true"></span>
       <p>Grades follow Cornell Law School’s grading policies. The goal is for as many of you as possible to understand the subject in depth and earn an excellent grade.</p>
     </div>
     <div class="two">
       <div class="panel">
         <span class="big-num tabnum">40%</span>
         <h3>Team case studies</h3>
-        <p>Two presentations, on Saturday October 24 and Saturday October 31. Teams of four or five mix law, MBA and CS students and are formed by the instructor. Every member of a team receives the same grade. Online students work in online teams.</p>
+        <p>Two presentations, on Saturday October 24 and Saturday October 31. The instructor forms teams of four or five that mix law, MBA and CS expertise. Every member of a team receives the same grade.</p>
       </div>
       <div class="panel">
         <span class="big-num tabnum">60%</span>
         <h3>Individual take-home exam</h3>
-        <p>An individual case study, taken online, in which you combine your legal skills with the economic and technical insights from the course. The hypothesis card is the method to use. The registrar sets the date: check <i>My Exam Information</i>. Grading is anonymous, so do not write your name or any identifying information in your answers. A mock exam is posted a few days before. You receive written feedback and have one week to discuss your grade.</p>
+        <p>An individual case study in which you combine your legal skills with the economic and technical insights from the course. The hypothesis card is the method to use. You download the questions and upload your answer through the Exam4 website, within the number of hours set for the exam. The registrar sets the date: check <i>My Exam Information</i>. Put your Exam ID in the header of every page and never your name or NetID. You may use your course materials and notes. Once the exam has begun and until grades are final, do not contact the instructor about it; write to the Registrar at <span class="mono">law.registrar@cornell.edu</span>. A mock exam is posted a few days before. You receive written feedback.</p>
       </div>
       <div class="panel">
         <h3>Using AI tools</h3>
         <p>Cornell’s Code of Academic Integrity treats any AI assistance not permitted in writing as unauthorized.</p>
         <ul>
-          <li><b>Take-home exam.</b> The exam instructions state in writing whether AI tools are allowed. The Law School’s <a href="https://support.law.cornell.edu/students/forms/Take-home-Exam-Instructions-for-NY-Tech-courses.pdf" target="_blank" rel="noopener">take-home instructions for Cornell Tech courses</a> also apply. Without written permission, AI assistance is not allowed.</li>
+          <li><b>Take-home exam.</b> The exam instructions state in writing whether AI tools are allowed. The exam is taken under the Law School Code of Academic Integrity and the Law School’s <a href="https://support.law.cornell.edu/students/forms/Take-home-Exam-Instructions-for-NY-Tech-courses.pdf" target="_blank" rel="noopener">take-home instructions for Cornell Tech courses</a>. Without written permission, AI assistance is not allowed.</li>
           <li><b>Team presentations.</b> AI tools are permitted. State which tools you used and for what, and check every source yourself. A fabricated citation is a violation of the Code.</li>
           <li><b>The 2031 card on October 31.</b> Written without AI and without devices.</li>
         </ul>
@@ -683,15 +731,17 @@ footer .sign{font-family:var(--f-display);font-style:italic;font-size:var(--step
       <a href="https://contentcredentials.org/verify" target="_blank" rel="noopener"><b>Content Credentials · Verify</b><span>Free tool that reads provenance data in images. Used in Session 4.</span></a>
       <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report" target="_blank" rel="noopener"><b>Stanford AI Index 2026</b><span>Annual data on research, the economy and policy.</span></a>
       <a href="https://oecd.ai/en/dashboards/overview" target="_blank" rel="noopener"><b>OECD.AI Policy Navigator</b><span>AI policies and initiatives across countries.</span></a>
-      <a href="https://ourworldindata.org/artificial-intelligence" target="_blank" rel="noopener"><b>Our World in Data · AI</b><span>Long-run charts on AI systems and inputs.</span></a>
-      <a href="https://www.youtube.com/channel/UCoxJ0e-teWbXsId_c9d99Dg" target="_blank" rel="noopener"><b>Scaling Theory podcast</b><span>The instructor’s podcast on technology, law and complexity.</span></a>
+      <a href="https://ourworldindata.org/artificial-intelligence" target="_blank" rel="noopener"><b>Our World in Data · AI</b><span>Charts and data on artificial intelligence.</span></a>
+      <a href="https://www.youtube.com/channel/UCoxJ0e-teWbXsId_c9d99Dg" target="_blank" rel="noopener"><b>Scaling Theory podcast</b><span>The instructor’s podcast.</span></a>
     </div>
   </div>
 </section>
 </main>
 
+<div class="street" aria-hidden="true"><div class="manhole"></div><div class="steam"></div><div class="steam s2"></div><div class="steam s3"></div><div class="taxi"><svg viewBox="0 0 92 40" aria-hidden="true"><rect class="s" x="38" y="2" width="16" height="6" rx="2"/><path class="b" d="M14 12 h50 l12 12 h10 a4 4 0 0 1 4 4 v6 h-88 v-14 a8 8 0 0 1 8 -8z"/><path class="w" d="M22 15 h18 v9 h-24z M44 15 h18 l9 9 h-27z"/><rect class="t" x="2" y="30" width="88" height="2"/><circle class="t" cx="22" cy="34" r="6"/><circle class="t" cx="70" cy="34" r="6"/><circle class="s" cx="22" cy="34" r="2"/><circle class="s" cx="70" cy="34" r="2"/></svg></div></div>
 <footer class="wrap">
   <p class="sign">Think across silos, act with clarity.</p>
+  <p><a href="mailto:tschrepel@cornell.edu">tschrepel@cornell.edu</a></p>
   <p class="mono" style="color:var(--muted)">LAW 6337 · Cornell Tech · Fall 2026 · Page updated October 2026</p>
 </footer>
 
